@@ -1,0 +1,45 @@
+# Extract reservoir level data #
+library(RODBC)
+library(tidyverse)
+streamflow <- odbcDriverConnect("driver={SQL Server};
+server=Hydroinformatics;
+database=streamflow")
+rawdata <- sqlQuery(streamflow,
+"SELECT StationFID, Timestamp, Level1
+FROM StreamFlow_Data
+WHERE StationFID IN ('406220A')", as.is = TRUE) #, '406221A','406273A', '406282A', '406222A'
+odbcCloseAll()
+levels <- rawdata %>%
+as.tibble() %>%
+mutate(Timestamp = as.POSIXct(Timestamp, format = "%Y-%m-%d %H:%M:%S"),
+Level1 = as.numeric(Level1)) %>%
+arrange(Timestamp) %>%
+mutate(delta_t = as.numeric(Timestamp - lag(Timestamp)),
+delta_h = Level1 - lag(Level1),
+rise = delta_h / delta_t)
+hist(levels$rise)
+summary(levels$rise)
+hist(levels$Level1)
+summary(levels$Level1)
+View(rawdata)
+View(rawdata)
+View(rawdata)
+df <- data.frame(levels)
+print(df)
+dirname()
+getwd()
+df <- data.frame(levels)
+print(df)
+write.csv(DataFrame Name, "C:/Users/tharindubasnayake/OneDrive - COLIBAN WATER/Anomalt detection R files\\levels.csv", row.names=FALSE)
+write.csv(DataFrame Name, "C:/Users/tharindubasnayake/OneDrive - COLIBAN WATER/Anomalt detection R files \\ levels.csv", row.names=FALSE)
+write.csv(DataFrame Name, C:/Users/tharindubasnayake/OneDrive - COLIBAN WATER/Anomalt detection R files \\ levels.csv, row.names=FALSE)
+write.csv(DataFrame Name, "C:/Users/tharindubasnayake/OneDrive - COLIBAN WATER/Anomalt detection R files \\ levels.csv", row.names=FALSE)
+write.csv(df, "C:\Users\tharindubasnayake\OneDrive - COLIBAN WATER\Anomalt detection R files \\ Levels.csv", row.names=FALSE)
+write.csv(df, "C:/Users/tharindubasnayake/OneDrive - COLIBAN WATER/Anomalt detection R files \\ levels.csv", row.names=FALSE)
+write.csv(df, "C:\Users\tharindubasnayake\OneDrive - COLIBAN WATER/Anomalt detection R files\\levels.csv", row.names=FALSE)
+write.csv(df, "C:/Users/tharindubasnayake/OneDrive-COLIBAN WATER/Anomalt detection R files//levels.csv", row.names=FALSE)
+write.csv(df, "C:/Users/tharindubasnayake//levels.csv", row.names=FALSE)
+df1 <- data.frame(rawdata)
+print(df1)
+write.csv(df1,"C:/Users/tharindubasnayake//rawdata.csv", row.names=FALSE) )
+write.csv(df1,"C:/Users/tharindubasnayake//rawdata.csv", row.names=FALSE)
