@@ -18,13 +18,13 @@ full_supply_level <- 447.8
 min_level <- 435.0
 
 # Define anomalies
-malmsbury_2021 <- malmsbury_2021 %>% 
+malmsbury_full_2021 <- malmsbury_2021 %>% 
   mutate(min = level <= min_level,
          FSL = level > full_supply_level + 2,
          z_score = abs(level - mean(level)) / sd(level) >= 3,
          MAD = abs(level - median(level)) / mad(level) >= 2.5)
 
-anomalies <- malmsbury_2021 %>% 
+anomalies <- malmsbury_full_2021 %>% 
   select(1:6) %>% 
   pivot_longer(-1:-2, names_to = "anomaly_type", values_to = "anomaly") %>% 
   filter(anomaly)
@@ -33,8 +33,8 @@ anomalies <- malmsbury_2021 %>%
 # Clean data (have to use the FSL min & MAD)# malmsbury_cleaned_2021 is data cleaned after
 # using FSL, MIN, MAD values
 
-malmsbury_cleaned_2021 <- malmsbury_2021 %>% 
-  filter(!MAD,!FSL,!min) %>% 
+malmsbury_cleaned_2021 <- malmsbury_full_2021 %>% 
+  filter(!MAD & !FSL& !min) %>% 
   mutate(level = round(level, 2))
 
 
