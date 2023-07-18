@@ -97,12 +97,12 @@ verified_2021 <- verified %>%
 plot_ly() %>%
   # add_trace(x = malmsbury_21_or$timestamp , y = malmsbury_21_ori$level, type = "scatter",
   #            mode = "lines", name = "Original", line=(list(width =0.5))) %>%
-  add_trace(x = malmsbury_21$timestamp, y = malmsbury_21$level, type = "scatter", 
-            mode = "lines" , name = "FSL and Min removed", line=(list(width = 0.75))) %>%
+  # add_trace(x = malmsbury_21$timestamp, y = malmsbury_21$level, type = "scatter", 
+  #           mode = "lines" , name = "FSL and Min removed", line=(list(width = 0.75))) %>%
   add_trace(x= verified_2021$timestamp, y =verified_2021$verified_level, type = "scatter",
             mode = "lines", name= "wims", line = (list(width = 1))) %>%
-  add_trace(x=malmsbury_cleaned$timestamp, y=malmsbury_cleaned$level, type = "scatter",
-            mode= "lines",name="ewma", line = (list(width = 1)))%>%
+  # add_trace(x=malmsbury_cleaned$timestamp, y=malmsbury_cleaned$level, type = "scatter",
+  #           mode= "lines",name="ewma", line = (list(width = 1)))%>%
   add_trace(x = malmsbury_cleaned1$timestamp, y = malmsbury_cleaned1$level , type = "scatter",
              mode = "lines", name = "sg cleaned", line=(list(width = 1.5))) %>%
   # add_trace(x = malmsbury_21$timestamp, y = smoothed1 , type = "scatter",
