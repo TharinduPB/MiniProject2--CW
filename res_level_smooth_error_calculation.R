@@ -83,9 +83,9 @@ plot_ly() %>%
 
 
 #############################################################################################################################
-#data may 2021
+#data 
 
-# Read raw data and remove NA and 0 values filter 2021
+# Read raw data and remove NA and 0 values 
 
 malmsbury_may <- read_csv("rawdata.csv") %>%
   select(timestamp = Timestamp, level = Level1) %>%
@@ -120,7 +120,7 @@ colnames(malmsbury_may21_merge) <- c("timestamp", "level", "verified_level", "qc
 
 res_may_1 <- phycon(malmsbury_may21_merge,447.8,435.0,3.5)
 
-res_may_2 <- sgfilter(res_may_1,0, 25001,0.03)
+res_may_2 <- sgfilter(res_may_1,0, 105,0.03)
 
 res_may_3 <- raterise(res_may_2,0.0023,288)
 
@@ -144,10 +144,10 @@ rmse_1 <- sqrt(mean_squared_diff_may1)
 
 plot_ly() %>%
   add_trace(x=verified_may$timestamp, y=verified_may$level, type="scatter",
-            mode= "lines", name="verified", color = "red",size= 0.5, 
+            mode= "lines", name="verified",size= 0.5, 
             line=(list(width = 1)))%>%
   add_trace(x=res_may_2$timestamp, y=res_may_2$level, type="scatter",
-            mode= "lines", name="cleaned_sgfilter", color = "blue", size=0.8,
+            mode= "lines", name="cleaned_sgfilter", size=0.8,
             line=(list(width = 1))) 
 
 
