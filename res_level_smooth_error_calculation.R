@@ -5,7 +5,7 @@ library(plotly)
 library(TTR)
 library(zoo)
 library(signal)
-library(levelSmoothing)
+library(levelsmooth)
 
 ####################################################################################################
 # Data set 2021 #
@@ -43,14 +43,17 @@ colnames(malmsbury_21_merge) <- c("timestamp", "level", "verified_level", "qc" )
 
 #remove physical, MAD, savitzky golay and rate of rise to remove anomalies
 
-res_2021_1 <- phycon(malmsbury_21_merge,447.8,435.0,3.5)
 
-res_2021_2 <- sgfilter(res_2021_1,0,105,0.03)
+res_2021_1 <- phycon(malmsbury_21_merge,447.8,435.0)
 
-res_2021_3 <- raterise(res_2021_2,0.0023,288)
+res_2021_2 <- mad_outliers(res_2021_1, 3.5)
+
+res_2021_3 <- sgfilter(res_2021_2,0,105,0.03)
+
+res_2021_4 <- raterise(res_2021_3,0.0023,288)
 
 
-res_2021_check <- res_2021_2[1:3]
+res_2021_check <- res_2021_3[1:3]
 
 
 squared_diff <- (res_2021_check$level - res_2021_check$verified_level)^2
@@ -58,7 +61,7 @@ mean_squared_diff <- mean(squared_diff)
 rmse <- sqrt(mean_squared_diff)
 
 
-res_2021_check_1 <- res_2021_3[1:3]
+res_2021_check_1 <- res_2021_4[1:3]
 
 squared_diff_1 <- (res_2021_check_1$level - res_2021_check_1$verified_level)^2
 mean_squared_diff_1 <- mean(squared_diff)
@@ -68,13 +71,13 @@ rmse_1 <- sqrt(mean_squared_diff)
 #plot the comparison
 
 plot_ly() %>%
-  # add_trace(x=malmsbury_21$timestamp, y=malmsbury_21$level, type = "scatter",
-  #           mode="lines", name="original", size = 0.1,
-  #           line=(list(width=1)))%>%
+  add_trace(x=malmsbury_21$timestamp, y=malmsbury_21$level, type = "scatter",
+            mode="lines", name="original", size = 0.1,
+            line=(list(width=1)))%>%
   add_trace(x=verified_2021$timestamp, y=verified_2021$level, type="scatter",
             mode= "lines", name="verified",size= 0.5, 
             line=(list(width = 1)))%>%
-  add_trace(x=res_2021_2$timestamp, y=res_2021_2$level, type="scatter",
+  add_trace(x=res_2021_3$timestamp, y=res_2021_3$level, type="scatter",
             mode= "lines", name="cleaned_sgfilter", size=0.8,
             line=(list(width = 1))) #%>%
   # add_trace(x= res_2021_3$timestamp, y=res_2021_3$level, type = "scatter",

@@ -39,7 +39,7 @@ verified_2021 <- verified %>%
 
 res_2021_1 <- phycon(res_2021,447.8,435.0,3.5)
 
-res_2021_2 <- sgfilter(res_2021_1,6,99,0.03)
+res_2021_2 <- sgfilter(res_2021_1,0,105,0.03)
 
 res_2021_3 <- raterise(res_2021_2,0.0023,288)
 

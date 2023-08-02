@@ -61,13 +61,13 @@ malmsbury_cleaned<- malmsbury_play %>%
 
 # use Savitzky-Golay method to draw a smoothed graph
 
-smoothed <- sgolayfilt(malmsbury_21$level, p = 6, n = 99)
-smoothed1 <- sgolayfilt(malmsbury_21$level, p = 4, n = 99)
+smoothed <- sgolayfilt(malmsbury_21$level, p = 0, n = 105)
+smoothed1 <- sgolayfilt(malmsbury_21$level, p = 0, n = 105)
 
 #using Savitzky-golay to find outliers and remove them,
 
 malmsbury_cleaned <- malmsbury_cleaned %>%
-  mutate( sg_smooth = sg_smooth <- sgolayfilt(malmsbury_cleaned$level, p = 4, n = 99),
+  mutate( sg_smooth = sg_smooth <- sgolayfilt(malmsbury_cleaned$level, p = 0, n = 105),
           sg_diff = sg_diff <- abs(sg_smooth - level),
           sg_diff_con = sg_diff >= 0.03)
 
@@ -95,10 +95,10 @@ verified_2021 <- verified %>%
 # visualise in plotly comparison between 
 
 plot_ly() %>%
-  # add_trace(x = malmsbury_21_or$timestamp , y = malmsbury_21_ori$level, type = "scatter",
-  #            mode = "lines", name = "Original", line=(list(width =0.5))) %>%
-  # add_trace(x = malmsbury_21$timestamp, y = malmsbury_21$level, type = "scatter", 
-  #           mode = "lines" , name = "FSL and Min removed", line=(list(width = 0.75))) %>%
+  add_trace(x = malmsbury_21_ori$timestamp , y = malmsbury_21_ori$level, type = "scatter",
+              mode = "lines", name = "Original", line=(list(width =0.5))) %>%
+   # add_trace(x = malmsbury_21$timestamp, y = malmsbury_21$level, type = "scatter", 
+   #           mode = "lines" , name = "FSL and Min removed", line=(list(width = 0.75))) %>%
   add_trace(x= verified_2021$timestamp, y =verified_2021$verified_level, type = "scatter",
             mode = "lines", name= "wims", line = (list(width = 1))) %>%
   # add_trace(x=malmsbury_cleaned$timestamp, y=malmsbury_cleaned$level, type = "scatter",
