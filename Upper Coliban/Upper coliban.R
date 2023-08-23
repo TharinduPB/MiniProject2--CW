@@ -48,7 +48,7 @@ res_data_1 <- phycon(res_data_merge,507,490)
 res_data_2 <- mad_outliers(res_data_1, 3.5)
 
 #inputs : binomial number, number of points considered, limit to cut off values
-res_data_3 <- sgfilter(res_data_2,0,105,0.03)
+res_data_3 <- sgfilter(res_data_1,0,105,0.03)
 
 
 ## use the rate rise functions to find anomalies ##
@@ -61,7 +61,7 @@ res_data_5 <- anomal_message(res_data_4,500,0.02)
 
 #check the RMSE 
 
-squared_diff <- (res_data_3$level - res_data_3$verified_level)^2
+squared_diff <- (res_data_3$sg_smooth - res_data_3$verified_level)^2
 mean_squared_diff <- mean(squared_diff)
 rmse <- sqrt(mean_squared_diff)
 
